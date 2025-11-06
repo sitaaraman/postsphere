@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PostUser;
 
 class PostUserController extends Controller
 {
@@ -22,6 +23,10 @@ class PostUserController extends Controller
             'profile' => 'required',
             'password' => 'required|min:4',
         ]);
+
+        $user = $request->all();
+        $user['slug'] = \Str::slug($request->fullname, '-');
+        PostUser::create($user);
         return view('postuser.create');
     }
 }
