@@ -36,7 +36,7 @@ class PostUserController extends Controller
 
         $user['slug'] = \Str::slug($request->fullname, '-');
         PostUser::create($user);
-        return redirect()->route('postuser.index')->with('success','User created successfully.');
+        return redirect()->route('postuser.login')->with('success','User created successfully.');
     }
 
     public function login(){
@@ -108,5 +108,11 @@ class PostUserController extends Controller
         // Update session user data
         $request->session()->put('user', $user);
         return redirect()->route('postuser.profile', [$data['slug']])->with('success','Profile updated successfully.');
+    }
+
+    public function destroy($slug){
+        $user = PostUser::where('slug', $slug)->first();
+        $user->delete();
+        return redirect()->route('postuser.index')->with('success','User deleted successfully.');
     }
 }

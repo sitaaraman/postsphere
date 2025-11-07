@@ -12,7 +12,15 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $user->fullname }}</h5>
                 <p class="card-text">{{ $user->email }}</p>
-                <a href="{{ route('postuser.edit', [session('user')->slug]) }}" class="btn" style="background-color:#a1c2bd; color:#e7f2ef;">Edit Profile</a>
+
+                <div class="d-flex justify-content-around mt-3">
+                <a href="{{ route('postuser.edit', [session('user')->slug]) }}" class="btn" style="background-color:#19183b; color:#e7f2ef;">Edit Profile</a>
+                    <form method="post" action="{{ route('postuser.delete', [session('user')->slug]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete Profile</button>
+                    </form> 
+                </div>
             </div>
         </div> 
     </div>   

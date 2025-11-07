@@ -19,4 +19,5 @@ Route::post('/postuser/logincheck', [PostUserController::class, 'loginCheck'])->
 Route::get('/postuser/logout', [PostUserController::class, 'logout'])->name('postuser.logout');
 Route::get('/postuser/{slug}/profile', [PostUserController::class, 'show'])->name('postuser.profile');
 Route::get('/postuser/{slug}/edit', [PostUserController::class, 'edit'])->name('postuser.edit');
-Route::post('/postuser/{slug}/update', [PostUserController::class, 'update'])->name('postuser.update');
+Route::put('/postuser/{slug}/update', [PostUserController::class, 'update'])->name('postuser.update');
+Route::delete('/postuser/{slug}/delete', [PostUserController::class, 'destroy'])->name('postuser.delete');

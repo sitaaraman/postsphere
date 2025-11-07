@@ -24,7 +24,7 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" value="{{ $user->password }}">
         </div>
-        <button type="submit" class="btn" style="background-color:#a1c2bd; color:#e7f2ef;">Update</button>
+        <button type="submit" class="btn" style="background-color:#19183b; color:#e7f2ef;">Update</button>
     </form>
 
 @endsection

@@ -3,6 +3,15 @@
 @section('title', 'Login Page')
 
 @section('content')
+
+    <div class="container py-3">
+        @if (session('success'))
+            <div class="alert alert-success m-0">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
+
     <form method="post" class="p-5" action="{{ route('postuser.logincheck') }}">
         @csrf 
 
@@ -16,7 +25,7 @@
             <input type="password" class="form-control" id="password" name="password">
         </div>
         
-        <button type="submit" class="btn" style="background-color:#a1c2bd; color:#e7f2ef;">Login</button>
+        <button type="submit" class="btn" style="background-color:#19183b; color:#e7f2ef;">Login</button>
 
     </form>
 
