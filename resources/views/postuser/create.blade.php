@@ -26,4 +26,10 @@
         <button type="submit" class="btn" style="background-color:#a1c2bdff">Submit</button>
 
     </form>
+
+    <hr>
+        <p class="text-center py-3 m-0">
+            Already registered?
+            <a href="{{ route('postuser.login') }}" class="text-primary fw-bold">Login here</a>
+        </p>
 @endsection

@@ -38,4 +38,27 @@ class PostUserController extends Controller
         PostUser::create($user);
         return redirect()->route('postuser.index')->with('success','User created successfully.');
     }
+
+    public function login(){
+        return view('postuser.login');
+    }
+
+    public function loginCheck(Request $request){
+        // dd($request->all());
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:4',
+        ]);
+
+        $user = PostUser::where('email', $request->email)
+                        ->where('password', $request->password)
+                        ->first();
+                
+        if($user){
+            $request->session()->put('user', $user);
+            return redirect()->route('postuser.index')->with('success','Login successful.');
+        }else{
+            return redirect()->back()->withErrors(['Invalid email or password.'])->withInput(); 
+        }
+    }
 }

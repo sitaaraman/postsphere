@@ -13,5 +13,6 @@ Route::get('/', function () {
 
 Route::get('/postuser', [PostUserController::class, 'index'])->name('postuser.index');
 Route::get('/postuser/create', [PostUserController::class, 'create'])->name('postuser.create');
-// Route::get('/postuser/create', [PostUserController::class, 'create']);
 Route::post('/postuser/store', [PostUserController::class, 'store'])->name('postuser.store');
+Route::get('/postuser/login', [PostUserController::class, 'login'])->name('postuser.login');
+Route::post('/postuser/logincheck', [PostUserController::class, 'loginCheck'])->name('postuser.logincheck');
