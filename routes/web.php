@@ -16,3 +16,5 @@ Route::get('/postuser/create', [PostUserController::class, 'create'])->name('pos
 Route::post('/postuser/store', [PostUserController::class, 'store'])->name('postuser.store');
 Route::get('/postuser/login', [PostUserController::class, 'login'])->name('postuser.login');
 Route::post('/postuser/logincheck', [PostUserController::class, 'loginCheck'])->name('postuser.logincheck');
+Route::get('/postuser/logout', [PostUserController::class, 'logout'])->name('postuser.logout');
+Route::get('/postuser/{slug}/profile', [PostUserController::class, 'show'])->name('postuser.profile');

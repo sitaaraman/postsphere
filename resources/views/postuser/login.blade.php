@@ -27,9 +27,11 @@
         <a href="{{ route('postuser.create') }}" class="text-primary fw-bold">Create an account</a>
     </p>
 
-    @if (session('error'))
+    <div class="container py-3">
+        @if (session('error'))
             <div class="alert alert-danger m-0">
                 {{ session('error') }}
             </div>
-    @endif
+        @endif
+    </div>
 @endsection

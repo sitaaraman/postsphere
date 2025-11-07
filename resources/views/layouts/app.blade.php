@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: #e7f2ef;">Home</a>
+                            <a class="nav-link" href="{{ route('postuser.index') }}" style="color: #e7f2ef;">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" style="color: #e7f2ef;">Photo</a>
@@ -26,7 +26,20 @@
                             <a class="nav-link" href="#" style="color: #e7f2ef;">Tale</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('postuser.create') }}" style="color: #e7f2ef;">Login/Registration</a>
+                            @if (!session()->has('user'))
+                                <a class="nav-link" href="{{ route('postuser.login') }}" style="color: #e7f2ef;">Welcome! Guess.</a>
+                            @else
+                                <a class="nav-link" href="{{ route('postuser.profile', [session('user')->slug]) }}" style="color: #e7f2ef;">Welcome! {{ session('user')->fullname }}.</a>
+                            @endif
+                            
+                        </li>
+                        <li class="nav-item">
+                            @if (!session()->has('user'))
+                                <a class="nav-link" href="{{ route('postuser.login') }}" style="color: #e7f2ef;">Login/Registration</a>
+                            @else
+                                <a class="nav-link" href="{{ route('postuser.logout') }}" style="color: #e7f2ef;">Logout</a>
+                            @endif
+                            
                         </li>
                     </ul>
                 </div>

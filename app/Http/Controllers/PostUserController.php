@@ -58,7 +58,17 @@ class PostUserController extends Controller
             $request->session()->put('user', $user);
             return redirect()->route('postuser.index')->with('success','Login successful.');
         }else{
-            return redirect()->back()->withErrors(['Invalid email or password.'])->withInput(); 
+            return redirect()->back()->with('error','Invalid email or password.')->withInput(); 
         }
+    }
+
+    public function logout(Request $request){
+        $request->session()->flush();
+        return redirect()->route('postuser.index')->with('success','Logged out successfully.');
+    }
+
+    public function show($slug){
+        $user = PostUser::where('slug', $slug)->first();
+        return view('postuser.show', compact('user'));
     }
 }
