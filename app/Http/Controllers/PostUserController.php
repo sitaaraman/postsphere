@@ -68,7 +68,45 @@ class PostUserController extends Controller
     }
 
     public function show($slug){
+        if(session()->has('user') == false){
+            return redirect()->route('postuser.login')->with('error','Please login to view profile.');
+        }
         $user = PostUser::where('slug', $slug)->first();
         return view('postuser.show', compact('user'));
+    }
+
+    public function edit($slug){
+        if(session()->has('user') == false){
+            return redirect()->route('postuser.login')->with('error','Please login to view profile.');
+        }
+        $user= PostUser::where('slug', $slug)->first();
+        return view('postuser.edit', compact('user'));
+    }
+
+    public function update(Request $request, $slug){
+        $request->validate([
+            'fullname' => 'required',
+            'email' => 'required|email',
+            'profile' => 'nullable',
+            'password' => 'required|min:4',
+        ]);
+
+        $user = PostUser::where('slug', $slug)->first();
+        $data = $request->all();
+
+        if($request->hasFile('profile')){
+            $file=$request->file('profile');
+            $fileName=time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('uploads/profile/'),$fileName);
+            $data['profile']=$fileName;
+        } else {
+            $data['profile'] = $user->profile;
+        }
+
+        $data['slug'] = \Str::slug($request->fullname, '-');
+        $user->update($data);
+        // Update session user data
+        $request->session()->put('user', $user);
+        return redirect()->route('postuser.profile', [$data['slug']])->with('success','Profile updated successfully.');
     }
 }

@@ -18,3 +18,5 @@ Route::get('/postuser/login', [PostUserController::class, 'login'])->name('postu
 Route::post('/postuser/logincheck', [PostUserController::class, 'loginCheck'])->name('postuser.logincheck');
 Route::get('/postuser/logout', [PostUserController::class, 'logout'])->name('postuser.logout');
 Route::get('/postuser/{slug}/profile', [PostUserController::class, 'show'])->name('postuser.profile');
+Route::get('/postuser/{slug}/edit', [PostUserController::class, 'edit'])->name('postuser.edit');
+Route::post('/postuser/{slug}/update', [PostUserController::class, 'update'])->name('postuser.update');

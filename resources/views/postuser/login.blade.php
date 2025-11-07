@@ -7,16 +7,16 @@
         @csrf 
 
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email Address</label>
+            <label for="email" class="form-label">Email Address</label>
             <input type="email" class="form-control" id="email" name="email">
         </div>
 
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
         
-        <button type="submit" class="btn" style="background-color:#a1c2bdff">Login</button>
+        <button type="submit" class="btn" style="background-color:#a1c2bd; color:#e7f2ef;">Login</button>
 
     </form>
 
