@@ -26,7 +26,7 @@
                             <a class="nav-link" href="#" style="color: #e7f2ef;">Tale</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color: #e7f2ef;">Login</a>
+                            <a class="nav-link" href="{{ route('postuser.create') }}" style="color: #e7f2ef;">Login/Registration</a>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +34,7 @@
         </nav>
     </header>
 
-    <main class="bg-warning-subtle" style="background-color: #e7f2ef;">
+    <main class="bg-warning-subtle mh-100">
         @yield('content')
     </main>
 

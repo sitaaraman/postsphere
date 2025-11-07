@@ -25,8 +25,17 @@ class PostUserController extends Controller
         ]);
 
         $user = $request->all();
+        // dd( $user );
+
+        if($request->hasFile('profile')){
+            $file=$request->file('profile');
+            $fileName=time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('uploads/profile/'),$fileName);
+            $user['profile']=$fileName;
+        }
+
         $user['slug'] = \Str::slug($request->fullname, '-');
         PostUser::create($user);
-        return view('postuser.create');
+        return redirect()->route('postuser.index')->with('success','User created successfully.');
     }
 }
