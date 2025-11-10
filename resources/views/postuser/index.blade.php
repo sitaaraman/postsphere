@@ -9,7 +9,9 @@
     <div class="container d-flex justify-content-between pb-5">
         @foreach ($posts as $p)
             <div class="card" style="width: 18rem;">
-                <img src="{{ asset('uploads/posts/' . $p->image) }}" class="card-img-top" alt="Post Image">
+                <a href="{{ route('post.show', [$p->slug]) }}">
+                    <img src="{{ asset('uploads/posts/' . $p->image) }}" class="card-img-top" alt="Post Image">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">{{ $p->title }}</h5>
                     <p class="card-text">{{ $p->description }}</p>
