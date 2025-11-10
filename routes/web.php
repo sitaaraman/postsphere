@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostUserController;
+use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('layouts.app');
@@ -21,3 +22,6 @@ Route::get('/postuser/{slug}/profile', [PostUserController::class, 'show'])->nam
 Route::get('/postuser/{slug}/edit', [PostUserController::class, 'edit'])->name('postuser.edit');
 Route::put('/postuser/{slug}/update', [PostUserController::class, 'update'])->name('postuser.update');
 Route::delete('/postuser/{slug}/delete', [PostUserController::class, 'destroy'])->name('postuser.delete');
+
+Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+Route::post('/post/store', [PostController::class, 'store'])->name('post.store');

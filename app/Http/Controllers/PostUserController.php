@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PostUser;
+use App\Models\Post;
 
 class PostUserController extends Controller
 {
     public function index(){
-        return view('postuser.index');
+        $posts = Post::latest()->paginate(4);
+        return view('postuser.index', compact('posts'));
     }
 
     public function create(){

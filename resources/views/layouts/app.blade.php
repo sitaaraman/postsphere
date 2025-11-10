@@ -20,7 +20,7 @@
                             <a class="nav-link" href="{{ route('postuser.index') }}" style="color: #e7f2ef;">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: #e7f2ef;">Photo</a>
+                            <a class="nav-link" href="{{ route('post.create') }}" style="color: #e7f2ef;">Photo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" style="color: #e7f2ef;">Tale</a>
