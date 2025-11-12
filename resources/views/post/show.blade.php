@@ -10,7 +10,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $post->title }}</h5>
                 <p class="card-text">{{ $post->description }}</p> 
-                    @if (session()->has('user_id') && session('user_id') == $post->post_user_id)
+                    @if (session()->has('user') && session('user')->id == $post->post_user_id)
                     
                         <a href="{{ route('post.edit', [$post->slug]) }}" class="btn btn-warning">Edit</a>  
 

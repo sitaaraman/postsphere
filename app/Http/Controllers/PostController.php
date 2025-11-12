@@ -28,7 +28,7 @@ class PostController extends Controller
                 'image' => 'required',
             ]);
 
-            // $request->merge(['post_user_id' => session()->get('user')->id]);
+            $request->merge(['post_user_id' => session()->get('user')->id]);
 
             $post = $request->all();
             // dd( $post );
@@ -78,22 +78,23 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required',
         ]);
 
         $post = Post::where('slug', $slug)->first();
-        $post['image'] = $request['image'];
+        $oldImg = $post['image'];
 
         if($request->hasFile('image')){
             $file=$request->file('image');
             $fileName=time().'_'.$file->getClientOriginalName();
             $file->move(public_path('uploads/posts/'),$fileName);
             $post->image=$fileName;
+        }else{
+            $post->image = $oldImg;
         }
 
         $post->title = $request->title;
         $post->description = $request->description;
-        $post->image = $post->image;
+        // $post->image = $post->image;
         $post->slug = \Str::slug($request->title, '-');
         $post->save();
 
