@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostUser;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -47,7 +48,7 @@ class PostController extends Controller
     }
 
     public function show($slug){
-        $post = Post::with('post_user')->where('slug', $slug)->first();
+        $post = Post::with('post_user', 'comments.post_user')->where('slug', $slug)->first();
         return view('post.show', compact('post'));
     }
 

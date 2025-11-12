@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostUserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 // Route::get('/', function () {
 //     return view('layouts.app');
@@ -29,3 +30,8 @@ Route::get('/post/show/{slug}', [PostController::class, 'show'])->name('post.sho
 Route::get('/post/edit/{slug}', [PostController::class, 'edit'])->name('post.edit');
 Route::put('/post/update/{slug}', [PostController::class, 'update'])->name('post.update');
 Route::delete('/post/delete/{slug}', [PostController::class, 'destroy'])->name('post.delete');
+
+Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');
+Route::put('/comment/update/{slug}', [CommentController::class, 'update'])->name('comment.update');
+// Route::get('/comment/edit/{slug}', [CommentController::class, 'edit'])->name('comment.edit');
+Route::delete('/comment/delete/{slug}', [CommentController::class, 'destroy'])->name('comment.delete');
