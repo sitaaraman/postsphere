@@ -10,7 +10,7 @@
         @foreach ($posts as $p)
             <div class="card" style="width: 18rem;">
                 <a href="{{ route('post.show', [$p->slug]) }}">
-                    <img src="{{ asset('uploads/posts/' . $p->image) }}" class="card-img-top" alt="Post Image">
+                    <img src="{{ asset('uploads/posts/' . $p->image) }}" class="card-img-top" alt="Post Image" style="height: 12rem; object-fit: cover;">
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">{{ $p->title }}</h5>

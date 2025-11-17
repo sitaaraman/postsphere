@@ -47,7 +47,7 @@
         </nav>
     </header>
 
-    <main class="bg-warning-subtle mh-100">
+    <main class="bg-warning-subtle mh-100" style="min-height: 75vh;">
         @yield('content')
     </main>
 
