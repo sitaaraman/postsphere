@@ -23,13 +23,13 @@
             <input type="password" class="form-control" id="password" name="password">
         </div>
         
-        <button type="submit" class="btn" style="background-color:#19183b; color:#e7f2ef;">Submit</button>
+        <button type="submit" class="btn" style="background-color:#19183b; color:#e7f2ef;">Register</button>
 
     </form>
 
     <hr>
         <p class="text-center py-3 m-0">
-            Already registered?
+            Already registered ?
             <a href="{{ route('postuser.login') }}" class="text-primary fw-bold">Login here</a>
         </p>
 @endsection
