@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PostUser;
 use App\Models\Post;
+// use App\Models\Comment;
+use Illuminate\Support\Str;
+
 
 class PostUserController extends Controller
 {
@@ -36,7 +39,7 @@ class PostUserController extends Controller
             $user['profile']=$fileName;
         }
 
-        $user['slug'] = \Str::slug($request->fullname, '-');
+        $user['slug'] = Str::slug($request->fullname, '-');
         PostUser::create($user);
         return redirect()->route('postuser.login')->with('success','User created successfully.');
     }
@@ -105,7 +108,7 @@ class PostUserController extends Controller
             $data['profile'] = $user->profile;
         }
 
-        $data['slug'] = \Str::slug($request->fullname, '-');
+        $data['slug'] = Str::slug($request->fullname, '-');
         $user->update($data);
         // Update session user data
         $request->session()->put('user', $user);

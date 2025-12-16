@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\PostUser;
-use App\Models\Comment;
+// use App\Models\PostUser;
+// use App\Models\Comment;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -40,7 +41,7 @@ class PostController extends Controller
                 $file->move(public_path('uploads/posts/'),$fileName);
                 $post['image']=$fileName;
             }
-            $post['slug'] = \Str::slug($request->title, '-');
+            $post['slug'] = Str::slug($request->title, '-');
             Post::create($post);
             return redirect()->route('postuser.index')->with('success','Post created successfully.');
         }
@@ -96,7 +97,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->description = $request->description;
         // $post->image = $post->image;
-        $post->slug = \Str::slug($request->title, '-');
+        $post->slug = Str::slug($request->title, '-');
         $post->save();
 
         return redirect()->route('postuser.index')->with('success','Post updated successfully.');

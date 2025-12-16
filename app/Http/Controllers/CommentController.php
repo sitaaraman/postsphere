@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
-use App\Models\Post;
+// use App\Models\Post;
+use Illuminate\Support\Str;
 
 class CommentController extends Controller
 {
@@ -19,7 +20,7 @@ class CommentController extends Controller
         $commentData = $request->all();
         // dd( $commentData );
         $commentData['post_user_id'] = session()->get('user')->id;
-        $commentData['slug'] = \Str::slug(substr($request->comment, 0, 20) . '-' . time(), '-');
+        $commentData['slug'] = Str::slug(substr($request->comment, 0, 20) . '-' . time(), '-');
 
         Comment::create($commentData);
 
