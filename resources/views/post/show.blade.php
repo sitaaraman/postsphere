@@ -53,7 +53,7 @@
     @foreach($post->comments as $c)
         <div class="container py-3">
 
-            <strong>{{ $c->post_user->fullname }}</strong>:
+            <strong>{{ $c->post_user?->fullname ?? 'Guest User' }}</strong>:
             <p>{{ $c->comment }}</p> 
 
             @if(session()->has('user') && session('user')->id == $c->post_user_id)
