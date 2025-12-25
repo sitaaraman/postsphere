@@ -148,6 +148,7 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan serve
+```
 
 
 ## 🔑 Admin Setup
@@ -157,6 +158,8 @@ Insert an admin record manually into the database:
 ```sql
 INSERT INTO admins (name, email, password)
 VALUES ('Admin', 'admin@example.com', '1234');
+
+```
 
 ## ⚠️ Security Notice
 
