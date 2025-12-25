@@ -70,7 +70,7 @@ resources/
 │   │   └── show.blade.php
 │   ├── layouts/
 │   │   └── app.blade.php
-│   └── welcome.blade.php 
+│    
 ```
 
 ## 🧑‍💻 Controllers
