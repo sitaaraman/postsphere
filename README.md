@@ -1,59 +1,198 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Blog System (Admin & User Panel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple **Laravel-based Blog Application** with:
+- Public blog posts
+- User registration & login (session-based)
+- User post & comment management
+- Admin dashboard to manage users, posts, and comments
 
-## About Laravel
+This project is built **without Laravel default auth**, using **custom session-based authentication**, ideal for learning core Laravel concepts.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📌 Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 👤 User Side
+- User Registration with profile image
+- User Login / Logout (Session-based)
+- Create, Edit, Delete Posts
+- View All Posts with Pagination
+- Add, Edit, Delete Comments
+- View User Profile
 
-## Learning Laravel
+### 🛡️ Admin Panel
+- Admin Login / Logout
+- Admin Dashboard with statistics
+- View & Delete Users
+- View & Delete Posts
+- View & Delete Comments
+- Admin Authentication Middleware
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🧱 Tech Stack
 
-## Laravel Sponsors
+- **Laravel**
+- **Blade Templates**
+- **MySQL**
+- **Bootstrap 5**
+- **Session-based Authentication**
+- **Eloquent ORM**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 📁 Project Structure
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```text
+resources/
+├── views/
+│   ├── admin/
+│   │   ├── auth/
+│   │   │   └── login.blade.php
+│   │   ├── comments/
+│   │   │   └── index.blade.php
+│   │   ├── posts/
+│   │   │   └── index.blade.php
+│   │   ├── users/
+│   │   │   └── index.blade.php
+│   │   ├── layouts/
+│   │   │   └── app.blade.php
+│   │   └── dashboard.blade.php
+│   ├── post/
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   ├── postuser/
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   ├── index.blade.php
+│   │   ├── login.blade.php
+│   │   └── show.blade.php
+│   ├── layouts/
+│   │   └── app.blade.php
+│   └── welcome.blade.php
 
-## Contributing
+## 🧑‍💻 Controllers
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Admin Controllers
+- AdminAuthController  
+- DashboardController  
+- AdminPostController  
+- AdminUserController  
+- AdminCommentController  
 
-## Code of Conduct
+### User Controllers
+- PostUserController  
+- PostController  
+- CommentController  
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🔐 Authentication System
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### User Authentication
+- Custom session-based authentication  
+- Session key: `user`
 
-## License
+### Admin Authentication
+- Separate `admins` table  
+- Session key: `admin`  
+- Protected using `AdminAuth` middleware  
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🧩 Middleware
+
+### AdminAuth Middleware
+**Location:**  
+`app/Http/Middleware/AdminAuth.php`
+
+**Purpose:**
+- Restricts access to admin routes  
+- Allows access only to logged-in admins  
+
+---
+
+## 🗃️ Database Design
+
+### Tables
+- `admins`
+- `post_users`
+- `posts`
+- `comments`
+
+### Relationships
+- PostUser → hasMany Posts  
+- PostUser → hasMany Comments  
+- Post → belongsTo PostUser  
+- Post → hasMany Comments  
+- Comment → belongsTo Post  
+- Comment → belongsTo PostUser  
+
+---
+
+## 📸 File Uploads
+- **Profile Images:** `public/uploads/profile/`  
+- **Post Images:** `public/uploads/posts/`  
+
+---
+
+## ⚙️ Installation Guide
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+
+
+## 🔑 Admin Setup
+
+Insert an admin record manually into the database:
+
+```sql
+INSERT INTO admins (name, email, password)
+VALUES ('Admin', 'admin@example.com', '1234');
+
+## ⚠️ Security Notice
+
+⚠️ **Important:**  
+This project is for **learning purposes only**.
+
+- Passwords are stored in **plain text**
+- Session-based authentication only
+- **Not recommended for production use**
+
+### For Production Use
+- Use password hashing (`bcrypt`)
+- Use Laravel’s built-in authentication system
+- Implement CSRF protection and authorization policies
+
+---
+
+## 📚 Learning Outcomes
+
+By working on this project, you will learn:
+- Laravel MVC Architecture
+- Custom Authentication using Sessions
+- Middleware Creation and Usage
+- Eloquent ORM & Model Relationships
+- File Upload Handling
+- Pagination and Form Validation
+- Admin Dashboard Logic
+
+---
+
+## ⭐ Contribution
+
+This project is intended for **educational use**.  
+Feel free to fork, improve, or extend it for practice.
+
+---
+
+## 📝 License
+
+This project is open-source and available for learning and personal use.
