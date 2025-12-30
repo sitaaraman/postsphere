@@ -157,6 +157,11 @@
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                <li class="nav-item">
+                                    <a href="{{ route('post.create') }}" class="dropdown-item">
+                                        Create Post
+                                    </a>
+                                </li>
                                 <li>
                                     <a class="dropdown-item"
                                         href="{{ route('postuser.profile', session('user')->slug) }}">
@@ -221,7 +226,7 @@
 
                             <span class="logo-text">PostSphere</span>
                         </a>
-                        
+
                     </div>
                     <p class="text-muted small">
                         A modern post & comment platform built with Laravel.

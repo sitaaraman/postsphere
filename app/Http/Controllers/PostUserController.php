@@ -8,7 +8,6 @@ use App\Models\Post;
 // use App\Models\Comment;
 use Illuminate\Support\Str;
 
-
 class PostUserController extends Controller
 {
     public function index()
