@@ -1,105 +1,175 @@
 @extends('layouts.app')
 
-@section('title', 'Post Show')
+@section('title', 'Post Details')
 
 @section('content')
 
-    <div class="container d-flex justify-content-center py-5">
-        <div class="card" style="width: 18rem;">
-            <img src="{{ asset('uploads/posts/' . $post->image) }}" class="card-img-top" alt="Post Image">
-            <div class="card-body">
-                <h5 class="card-title">{{ $post->title }}</h5>
-                <p class="card-text">{{ $post->description }}</p> 
-                    @if (session()->has('user') && session('user')->id == $post->post_user_id)
-                    
-                        <a href="{{ route('post.edit', [$post->slug]) }}" class="btn btn-warning">Edit</a>  
+<div class="container py-5">
 
-                        <form action="{{ route('post.delete', [$post->slug]) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
+    <!-- ================= POST CARD ================= -->
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
 
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
-                    @endif  
+            <div class="card shadow border-0 rounded-4 overflow-hidden">
+
+                <img src="{{ asset('uploads/posts/' . $post->image) }}"
+                     class="w-100"
+                     style="height:280px; object-fit:cover;"
+                     alt="Post Image">
+
+                <div class="card-body p-4">
+                    <h3 class="fw-bold mb-2">{{ $post->title }}</h3>
+                    <p class="text-muted">{{ $post->description }}</p>
+
+                    @if(session()->has('user') && session('user')->id == $post->post_user_id)
+                        <div class="d-flex gap-2 mt-3">
+
+                            <a href="{{ route('post.edit', $post->slug) }}"
+                               class="btn btn-outline-warning">
+                                Edit
+                            </a>
+
+                            <form action="{{ route('post.delete', $post->slug) }}"
+                                  method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-outline-danger"
+                                        onclick="return confirm('Delete this post?')">
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+                    @endif
+                </div>
+
             </div>
-        </div> 
-    </div>
-
-    <hr>
-
-    <div class="container d-flex justify-content-center card px-0">
-        @if(session()->has('user'))
-            <form action="{{ route('comment.store') }}" method="POST" class="mb-3">
-                @csrf 
-                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                <textarea name="comment" rows="3" class="form-control mb-2" placeholder="Write your comment..."></textarea>
-                <button type="submit" class="btn btn-success ms-3">Comment</button>
-            </form>
-        @endif
-    </div>
-
-    <div class="container py-3">
-        @if (session('success'))
-            <div class="alert alert-success m-0">
-                {{ session('success') }}
-            </div>
-        @endif
-    </div>
-
-    <hr>
-
-    <h5 class="m-0 pb-3">Comments ({{ $post->comments->count() }})</h5>
-
-    @foreach($post->comments as $c)
-        <div class="container py-3">
-
-            <strong>{{ $c->post_user?->fullname ?? 'Guest User' }}</strong>:
-            <p>{{ $c->comment }}</p> 
-
-            @if(session()->has('user') && session('user')->id == $c->post_user_id)
-                <form action="{{ route('comment.update' , $c->slug) }}" method="POST" class="edit-form" id="edit-form-{{ $c->slug }}">
-                    @csrf
-                    @method('PUT')
-                    
-                    <textarea name="comment" rows="1" class="form-control">{{ $c->comment }}</textarea>
-                    
-                    <button class="btn btn-success mt-2">Update Comment</button>
-                </form>
-            
-                <span class="editcomment btn btn-warning mt-2" data-comment-id="{{ $c->slug }}">Edit Comment</span>
-                
-                <form action="{{ route('comment.delete' , [$c->slug]) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger mt-2">Delete Comment</button>
-                </form>
-            @endif
 
         </div>
-    @endforeach
+    </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- ================= COMMENT FORM ================= -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-6">
 
-        <script>
-            $(document).ready(function(){
+            <div class="card shadow-sm border-0 rounded-4 p-4">
 
-                $(".edit-form").hide();
+                <h5 class="fw-semibold mb-3">Leave a Comment</h5>
 
-                $(".editcomment").click(function(){
-                    var commentId = $(this).data('comment-id');
+                <form action="{{ route('comment.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
 
-                    $(".edit-form").hide();
-                    $(".editcomment").show();
+                    <textarea name="comment"
+                              rows="3"
+                              class="form-control mb-3"
+                              placeholder="Write your comment..."
+                              required>{{ session('pending_comment.comment') ?? '' }}</textarea>
 
-                    $(".editcomment").show();
+                    <button class="btn btn-modern">
+                        Submit Comment
+                    </button>
 
-                    $(this).hide();
+                    @if(!session()->has('user'))
+                        <p class="text-muted small mt-2 mb-0">
+                            🔒 Login required to submit comment.
+                        </p>
+                    @endif
+                </form>
 
-                    $("#edit-form-" + commentId).toggle();
+            </div>
 
-                    $("#comment-" + commentId + " .btn-danger").show();
-                });
-            });
-        </script>
+        </div>
+    </div>
+
+    <!-- ================= FLASH MESSAGE ================= -->
+    @if(session('success'))
+        <div class="alert alert-success text-center mt-4">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <!-- ================= COMMENTS LIST ================= -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-6">
+
+            <h5 class="fw-bold mb-4">
+                Comments ({{ $post->comments->count() }})
+            </h5>
+
+            @foreach($post->comments as $c)
+                <div class="card mb-3 shadow-sm border-0 rounded-4">
+                    <div class="card-body">
+
+                        <strong>{{ $c->post_user?->fullname ?? 'Guest User' }}</strong>
+                        <p class="mb-2 text-muted">{{ $c->comment }}</p>
+
+                        @if(session()->has('user') && session('user')->id == $c->post_user_id)
+
+                            <!-- Edit Form -->
+                            <form action="{{ route('comment.update', $c->slug) }}"
+                                  method="POST"
+                                  class="edit-form mt-2"
+                                  id="edit-form-{{ $c->slug }}">
+                                @csrf
+                                @method('PUT')
+
+                                <textarea name="comment"
+                                          rows="2"
+                                          class="form-control mb-2">{{ $c->comment }}</textarea>
+
+                                <button class="btn btn-sm btn-success">
+                                    Update
+                                </button>
+                            </form>
+
+                            <div class="d-flex gap-2 mt-2">
+                                <button type="button"
+                                        class="btn btn-sm btn-warning editcomment"
+                                        data-comment-id="{{ $c->slug }}">
+                                    Edit
+                                </button>
+
+                                <form action="{{ route('comment.delete', $c->slug) }}"
+                                      method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+
+                        @endif
+
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".edit-form").hide();
+
+        $(".editcomment").click(function () {
+            let id = $(this).data('comment-id');
+
+            $(".edit-form").hide();
+            $(".editcomment").show();
+
+            $(this).hide();
+            $("#edit-form-" + id).slideDown();
+        });
+    });
+</script>
 
 @endsection
+

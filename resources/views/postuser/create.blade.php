@@ -1,35 +1,34 @@
 @extends('layouts.app')
-
-@section('title', 'registration')
+@section('title', 'Register')
 
 @section('content')
-    <form method="post" class="p-5" action="{{ route('postuser.store') }}" enctype="multipart/form-data">
-        @csrf 
 
-        <div class="mb-3">
-            <label for="fullname" class="form-label">Your Name</label>
-            <input type="text" class="form-control" id="fullname" name="fullname">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="email" name="email">
-        </div>
-        <div class="mb-3">
-            <label for="profile" class="form-label">Your Profile</label>
-            <input type="file" class="form-control" id="profile" name="profile">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        
-        <button type="submit" class="btn" style="background-color:#19183b; color:#e7f2ef;">Register</button>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
 
-    </form>
+                <div class="card mod-card p-4">
+                    <h4 class="fw-bold text-center mb-4">Create Account</h4>
 
-    <hr>
-        <p class="text-center py-3 m-0">
-            Already registered ?
-            <a href="{{ route('postuser.login') }}" class="text-primary fw-bold">Login here</a>
-        </p>
+                    <form method="post" action="{{ route('postuser.store') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        <input class="form-control mb-3" name="fullname" placeholder="Full Name">
+                        <input class="form-control mb-3" name="email" placeholder="Email Address">
+                        <input class="form-control mb-3" type="file" name="profile">
+                        <input class="form-control mb-3" type="password" name="password" placeholder="Password">
+
+                        <button class="btn btn-modern w-100">Register</button>
+                    </form>
+
+                    <p class="text-center mt-3">
+                        Already registered?
+                        <a href="{{ route('postuser.login') }}" class="fw-bold text-decoration-none">Login</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 @endsection

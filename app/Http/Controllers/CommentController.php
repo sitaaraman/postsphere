@@ -11,7 +11,21 @@ class CommentController extends Controller
 {
     public function store(Request $request)
     {
-        
+        if (!session()->has('user')) {
+
+            session([
+                'pending_comment' => [
+                    'post_id' => $request->post_id,
+                    'comment' => $request->comment,
+                    'redirect_url' => url()->previous()
+                ]
+            ]);
+
+            return redirect()
+                ->route('postuser.login')
+                ->with('error', 'Please login to submit a comment.');
+        }
+
         $request->validate([
             'post_id' => 'required|exists:posts,id',
             'comment' => 'required|string',
@@ -23,35 +37,10 @@ class CommentController extends Controller
         $commentData['slug'] = Str::slug(substr($request->comment, 0, 20) . '-' . time(), '-');
 
         Comment::create($commentData);
+        session()->forget('pending_comment');
 
         return redirect()->back()->with('success', 'Comment added successfully.');
     }
-
-    // dd( 'here' );
-        // if (!session()->has('user')) {
-        //     return redirect()->route('postuser.login')->with('error', 'Please login to add a comment.');
-        // }
-
-        // $userId = session()->get('user')->id;'post_user_id' => 'required|exists:post_users,id',
-
-    // public function edit($slug)
-    // {
-    //     if (!session()->has('user')) {
-    //         return redirect()->route('postuser.login')->with('error', 'Please login to edit a comment.');
-    //     }
-
-    //     $comment = Comment::where('slug', $slug)->first();
-
-    //     if (!$comment) {
-    //         return redirect()->back()->with('error', 'Comment not found.');
-    //     }
-
-    //     if ($comment->post_user_id != session()->get('user')->id) {
-    //         return redirect()->back()->with('error', 'You are not authorized to edit this comment.');
-    //     }
-
-    //     return view('comment.edit', compact('comment'));
-    // }
 
     public function update(Request $request, $slug)
     {
@@ -68,13 +57,6 @@ class CommentController extends Controller
         if ($comment->post_user_id != session()->get('user')->id) {
             return redirect()->back()->with('error', 'You are not authorized to update this comment.');
         }
-
-        // $request->validate([
-        //     'comment' => 'required|string',
-        // ]);
-
-        // $comment->comment = $request->input('comment');
-        // $comment->save();
 
         $request->validate([
             'comment' => 'required'

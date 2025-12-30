@@ -1,46 +1,40 @@
 @extends('layouts.app')
-
-@section('title', 'Login Page')
+@section('title', 'Login')
 
 @section('content')
 
-    <div class="container py-3">
-        @if (session('success'))
-            <div class="alert alert-success m-0">
-                {{ session('success') }}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+
+                <div class="card mod-card p-4">
+                    <h4 class="fw-bold text-center mb-4">Welcome Back</h4>
+
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+                    <form method="post" action="{{ route('postuser.logincheck') }}">
+                        @csrf
+
+                        <input class="form-control mb-3" type="email" name="email" placeholder="Email">
+                        <input class="form-control mb-3" type="password" name="password" placeholder="Password">
+
+                        <button class="btn btn-modern w-100">Login</button>
+                    </form>
+
+                    <p class="text-center mt-3">
+                        New user?
+                        <a href="{{ route('postuser.create') }}" class="fw-bold text-decoration-none">Create account</a>
+                    </p>
+                </div>
+
             </div>
-        @endif
+        </div>
     </div>
 
-    <form method="post" class="p-5" action="{{ route('postuser.logincheck') }}">
-        @csrf 
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="email" name="email">
-        </div>
-
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        
-        <button type="submit" class="btn" style="background-color:#19183b; color:#e7f2ef;">Login</button>
-
-    </form>
-
-    <hr>
-
-    <p class="text-center py-3 m-0">
-        Not registered? 
-        <a href="{{ route('postuser.create') }}" class="text-primary fw-bold">Create an account</a>
-    </p>
-
-    <div class="container py-3">
-        @if (session('error'))
-            <div class="alert alert-danger m-0">
-                {{ session('error') }}
-            </div>
-        @endif
-    </div>
 @endsection
