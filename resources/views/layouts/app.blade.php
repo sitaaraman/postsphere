@@ -130,6 +130,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('postuser.index') }}">Home</a>
                     </li>
+                    {{-- {{ gettype(session('user')) }} --}}
 
                     {{-- NOT LOGGED IN --}}
                     @if (!session()->has('user'))

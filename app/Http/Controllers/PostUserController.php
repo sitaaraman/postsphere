@@ -28,23 +28,35 @@ class PostUserController extends Controller
         $request->validate([
             'fullname' => 'required',
             'email' => 'required|email',
-            'profile' => 'required',
+            'profile' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             'password' => 'required|min:4',
         ]);
 
-        $user = $request->all();
+        $userData = $request->all();
         // dd( $user );
 
         if ($request->hasFile('profile')) {
             $file = $request->file('profile');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/profile/'), $fileName);
-            $user['profile'] = $fileName;
+            $userData['profile'] = $fileName;
         }
 
-        $user['slug'] = Str::slug($request->fullname, '-');
-        PostUser::create($user);
-        return redirect()->route('postuser.login')->with('success', 'User created successfully.');
+        $userData['slug'] = Str::slug($request->fullname, '-');
+        $user = PostUser::create($userData);
+
+        // ✅ Log user in
+        // session(['user' => (object)$user->toArray()]);
+        // session()->put('user', $user);
+        session(['user' => $user]);
+
+        // ✅ Check if pending comment exists
+        if (session()->has('pending_comment')) {
+            return redirect(session('pending_comment.redirect_url'))
+                ->with('success', 'Registration successful. You can now submit your comment.');
+        }
+
+        return redirect()->route('postuser.index')->with('success', 'User created successfully.');
     }
 
     public function login()
@@ -66,6 +78,9 @@ class PostUserController extends Controller
         if ($user) {
 
             // ✅ Store logged-in user in session
+            // session(['user' => (object)$user->toArray()]);
+            // session()->put('user', $user);
+            // $request->session()->put('user', $user);
             session(['user' => $user]);
 
             // ✅ If user was trying to comment before login
@@ -86,6 +101,7 @@ class PostUserController extends Controller
 
     public function logout(Request $request)
     {
+        // session()->forget('user');
         $request->session()->flush();
         return redirect()->route('postuser.index')->with('success', 'Logged out successfully.');
     }
